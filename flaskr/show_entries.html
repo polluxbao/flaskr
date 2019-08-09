@@ -1,0 +1,21 @@
+{% extends "layout.html" %}    <!--模板继承 ，继承layout.html的内容-->
+{% block body %}
+    {% if session.logged_in %}    <!--初次登录，session.logged_in为假，以下内容不显示 -->
+        <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+        <dl>
+        <dt>Title:
+        <dd><input type=text size=30 name=title>
+        <dt>Text:
+        <dd><textarea name=text rows=5 cols=40></textarea>
+        <dd><input type=submit value=Share>
+        </dl>
+        </form>
+    {% endif %}
+    <ul class=entries>
+        {% for entry in entries %}
+            <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
+        {% else %}                                 <!-- 以下显示-->
+            <li><em>Unbelievable.  No entries here so far</em>
+        {% endfor %}
+    </ul>
+{% endblock %}
